@@ -1,0 +1,21 @@
+# Dépendances
+node_modules/
+__pycache__/
+*.pyc
+.env
+
+# Build
+dist/
+build/
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Gemini artifacts
+.gemini/

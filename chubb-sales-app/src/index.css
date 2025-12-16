@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+:root {
+  --chubb-red: #c8102e;
+  --chubb-dark: #1a1a2e;
+  --chubb-gray: #f4f4f5;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f8fafc;
+  margin: 0;
+  padding: 0;
+}
+
+/* Scrollbar personnalisée */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c8102e;
+  border-radius: 3px;
+}

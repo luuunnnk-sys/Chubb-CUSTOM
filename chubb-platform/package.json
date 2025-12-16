@@ -1,0 +1,28 @@
+{
+  "name": "chubb-platform",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3000",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start:sketch": "cd ../chubb-sketch-app && npm run dev",
+    "start:3d": "cd ../DETECTION-EXTINCTION-CHUBB/backend && python main.py",
+    "start:all": "concurrently \"npm run dev\" \"npm run start:sketch\" \"npm run start:3d\""
+  },
+  "dependencies": {
+    "lucide-react": "^0.460.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "concurrently": "^9.1.0",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.1"
+  }
+}
