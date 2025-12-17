@@ -10,7 +10,8 @@ export interface Security3DModuleProps {
 const Security3DModule = ({ refreshTrigger, isFullscreen, deviceMode }: Security3DModuleProps) => {
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
-    const SECURITY_3D_URL = 'http://localhost:8000';
+    // Use environment variable in production, fallback to localhost for development
+    const SECURITY_3D_URL = import.meta.env.VITE_SECURITY_3D_URL || 'http://localhost:8000';
     const [iframeSrc, setIframeSrc] = useState(`${SECURITY_3D_URL}?mode=${deviceMode}`);
 
     useEffect(() => {
