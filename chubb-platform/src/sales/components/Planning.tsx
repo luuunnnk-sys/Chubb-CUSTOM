@@ -118,7 +118,7 @@ const Planning: React.FC<PlanningProps> = ({ events, prospects, onAddEvent }) =>
                         <div className="space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
-                                <select value={newEvent.type} onChange={(e) => setNewEvent({ ...newEvent, type: e.target.value as CalendarEvent['type'] })} className="w-full px-3 py-2 border border-gray-200 rounded-lg">
+                                <select value={newEvent.type} onChange={(e) => setNewEvent({ ...newEvent, type: e.target.value as CalendarEvent['type'] })} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-900">
                                     <option value="rdv">📅 RDV</option>
                                     <option value="rappel">🔔 Rappel</option>
                                     <option value="deadline">⏰ Deadline</option>
@@ -127,28 +127,28 @@ const Planning: React.FC<PlanningProps> = ({ events, prospects, onAddEvent }) =>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Titre</label>
-                                <input type="text" value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-lg" placeholder="Ex: RDV client..." />
+                                <input type="text" value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-900" placeholder="Ex: RDV client..." />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
-                                    <input type="date" value={newEvent.date} onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-lg" />
+                                    <input type="date" value={newEvent.date} onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-900" />
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Heure</label>
-                                    <input type="time" value={newEvent.time} onChange={(e) => setNewEvent({ ...newEvent, time: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-lg" />
+                                    <input type="time" value={newEvent.time} onChange={(e) => setNewEvent({ ...newEvent, time: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-900" />
                                 </div>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Prospect (optionnel)</label>
-                                <select value={newEvent.prospectId} onChange={(e) => setNewEvent({ ...newEvent, prospectId: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-lg">
+                                <select value={newEvent.prospectId} onChange={(e) => setNewEvent({ ...newEvent, prospectId: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-900">
                                     <option value="">Aucun</option>
                                     {prospects.map(p => (<option key={p.id} value={p.id}>{p.companyName}</option>))}
                                 </select>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                                <textarea value={newEvent.description} onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-lg resize-none" rows={2} placeholder="Notes..." />
+                                <textarea value={newEvent.description} onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })} className="w-full px-3 py-2 border border-gray-200 rounded-lg resize-none text-gray-900" rows={2} placeholder="Notes..." />
                             </div>
                         </div>
                         <div className="flex gap-3 mt-6">

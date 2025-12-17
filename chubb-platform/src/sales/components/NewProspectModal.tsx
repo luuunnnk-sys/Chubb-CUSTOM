@@ -38,27 +38,27 @@ const NewProspectModal: React.FC<NewProspectModalProps> = ({ onClose, onSave }) 
                             <h3 className="font-semibold text-gray-800 mb-4">🏢 Informations entreprise</h3>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Nom de l'entreprise *</label>
-                                <input type="text" value={form.companyName} onChange={(e) => setForm({ ...form, companyName: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-[#c8102e]" placeholder="Ex: ACME Corp" />
+                                <input type="text" value={form.companyName} onChange={(e) => setForm({ ...form, companyName: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-[#c8102e] text-gray-900" placeholder="Ex: ACME Corp" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Secteur</label>
-                                <select value={form.sector} onChange={(e) => setForm({ ...form, sector: e.target.value as Prospect['sector'] })} className="w-full px-4 py-2 border border-gray-200 rounded-lg">
+                                <select value={form.sector} onChange={(e) => setForm({ ...form, sector: e.target.value as Prospect['sector'] })} className="w-full px-4 py-2 border border-gray-200 rounded-lg text-gray-900">
                                     {Object.entries(SECTOR_LABELS).map(([key, label]) => (<option key={key} value={key}>{label}</option>))}
                                 </select>
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Effectif</label>
-                                    <input type="text" value={form.employeeCount} onChange={(e) => setForm({ ...form, employeeCount: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg" placeholder="Ex: 50-100" />
+                                    <input type="text" value={form.employeeCount} onChange={(e) => setForm({ ...form, employeeCount: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg text-gray-900" placeholder="Ex: 50-100" />
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">CA annuel</label>
-                                    <input type="text" value={form.annualRevenue} onChange={(e) => setForm({ ...form, annualRevenue: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg" placeholder="Ex: 5M€" />
+                                    <input type="text" value={form.annualRevenue} onChange={(e) => setForm({ ...form, annualRevenue: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg text-gray-900" placeholder="Ex: 5M€" />
                                 </div>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Adresse</label>
-                                <input type="text" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg" placeholder="Adresse complète" />
+                                <input type="text" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg text-gray-900" placeholder="Adresse complète" />
                             </div>
                         </div>
                     )}
@@ -67,20 +67,20 @@ const NewProspectModal: React.FC<NewProspectModalProps> = ({ onClose, onSave }) 
                             <h3 className="font-semibold text-gray-800 mb-4">👤 Contact principal</h3>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Nom complet</label>
-                                <input type="text" value={form.contactName} onChange={(e) => setForm({ ...form, contactName: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg" placeholder="Ex: Jean Dupont" />
+                                <input type="text" value={form.contactName} onChange={(e) => setForm({ ...form, contactName: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg text-gray-900" placeholder="Ex: Jean Dupont" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Fonction</label>
-                                <input type="text" value={form.contactRole} onChange={(e) => setForm({ ...form, contactRole: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg" placeholder="Ex: Directeur Technique" />
+                                <input type="text" value={form.contactRole} onChange={(e) => setForm({ ...form, contactRole: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg text-gray-900" placeholder="Ex: Directeur Technique" />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                                    <input type="email" value={form.contactEmail} onChange={(e) => setForm({ ...form, contactEmail: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg" placeholder="email@entreprise.com" />
+                                    <input type="email" value={form.contactEmail} onChange={(e) => setForm({ ...form, contactEmail: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg text-gray-900" placeholder="email@entreprise.com" />
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
-                                    <input type="tel" value={form.contactPhone} onChange={(e) => setForm({ ...form, contactPhone: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg" placeholder="06 XX XX XX XX" />
+                                    <input type="tel" value={form.contactPhone} onChange={(e) => setForm({ ...form, contactPhone: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg text-gray-900" placeholder="06 XX XX XX XX" />
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@ const NewProspectModal: React.FC<NewProspectModalProps> = ({ onClose, onSave }) 
                             <h3 className="font-semibold text-gray-800 mb-4">💼 Opportunité</h3>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Valeur potentielle (€)</label>
-                                <input type="number" value={form.potentialValue} onChange={(e) => setForm({ ...form, potentialValue: Number(e.target.value) })} className="w-full px-4 py-2 border border-gray-200 rounded-lg" placeholder="0" />
+                                <input type="number" value={form.potentialValue} onChange={(e) => setForm({ ...form, potentialValue: Number(e.target.value) })} className="w-full px-4 py-2 border border-gray-200 rounded-lg text-gray-900" placeholder="0" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Probabilité de succès: {form.probability}%</label>
@@ -98,7 +98,7 @@ const NewProspectModal: React.FC<NewProspectModalProps> = ({ onClose, onSave }) 
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Date de conclusion estimée</label>
-                                <input type="date" value={form.expectedDate} onChange={(e) => setForm({ ...form, expectedDate: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg" />
+                                <input type="date" value={form.expectedDate} onChange={(e) => setForm({ ...form, expectedDate: e.target.value })} className="w-full px-4 py-2 border border-gray-200 rounded-lg text-gray-900" />
                             </div>
                             <div className="pt-4 border-t">
                                 <label className="flex items-center gap-3 cursor-pointer">
