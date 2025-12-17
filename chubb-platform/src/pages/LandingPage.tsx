@@ -151,11 +151,11 @@ const LandingPage = ({ onSelectModule, deviceMode, onDeviceModeChange }: Landing
                                 fontWeight: 600,
                                 transition: 'all 0.2s ease',
                                 background: deviceMode === 'tablet'
-                                    ? 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)'
+                                    ? 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)'
                                     : 'transparent',
                                 color: deviceMode === 'tablet' ? '#ffffff' : '#94a3b8',
                                 boxShadow: deviceMode === 'tablet'
-                                    ? '0 4px 12px rgba(34, 197, 94, 0.4)'
+                                    ? '0 4px 12px rgba(220, 38, 38, 0.4)'
                                     : 'none'
                             }}
                         >
