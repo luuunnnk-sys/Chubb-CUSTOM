@@ -571,7 +571,9 @@ function updateDetection() {
     const hAmb = parseFloat(document.getElementById('h-amb').value);
     const hFC = parseFloat(document.getElementById('h-fc').value);
 
-    if (type === 'vesda') {
+    // Always regenerate VESDA pipes if there are VESDA units placed, regardless of det-type dropdown
+    const hasVesdaUnits = manualItems.some(item => item.type === 'vesda');
+    if (type === 'vesda' || hasVesdaUnits) {
         generateVesdaPipes(L, W, { hFP, hAmb, hFC });
     }
     updateDetectorList();
