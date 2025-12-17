@@ -1,0 +1,13 @@
+{
+    "version": 2,
+    "framework": "vite",
+    "buildCommand": "cd chubb-platform && npm install && npm run build",
+    "outputDirectory": "chubb-platform/dist",
+    "installCommand": "cd chubb-platform && npm install",
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/"
+        }
+    ]
+}
