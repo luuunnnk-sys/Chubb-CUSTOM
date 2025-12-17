@@ -170,6 +170,11 @@ function init() {
         setMode('view');
     });
 
+    // Touch events for iPad/tablet stylus interaction
+    renderer.domElement.addEventListener('touchstart', onTouchStart, { passive: false });
+    renderer.domElement.addEventListener('touchmove', onTouchMove, { passive: false });
+    renderer.domElement.addEventListener('touchend', onTouchEnd, { passive: false });
+
     // Initialize device mode (PC/iPad)
     initDeviceMode();
 
@@ -178,6 +183,151 @@ function init() {
     updateExtinctionUI();
     updateAll();
     animate();
+}
+
+// Toggle controls panel visibility (for tablet mode)
+function toggleControlsPanel() {
+    const controls = document.getElementById('controls');
+    const btn = document.getElementById('collapse-btn');
+    if (controls) {
+        controls.classList.toggle('collapsed');
+        btn.textContent = controls.classList.contains('collapsed') ? '☰' : '✕';
+    }
+}
+window.toggleControlsPanel = toggleControlsPanel;
+
+// Touch event handlers for iPad/tablet
+let touchStartPos = null;
+
+function onTouchStart(e) {
+    if (interactionMode === 'view') return;
+    e.preventDefault();
+
+    const touch = e.touches[0];
+    touchStartPos = { x: touch.clientX, y: touch.clientY };
+
+    // Update mouse position for raycasting
+    mouse.x = (touch.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(touch.clientY / window.innerHeight) * 2 + 1;
+}
+
+function onTouchMove(e) {
+    if (interactionMode === 'view' || interactionMode === 'delete') return;
+    e.preventDefault();
+
+    const touch = e.touches[0];
+    mouse.x = (touch.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(touch.clientY / window.innerHeight) * 2 + 1;
+
+    // Simulate mousemove for ghost preview
+    raycaster.setFromCamera(mouse, camera);
+    handleInteractionMove();
+}
+
+function onTouchEnd(e) {
+    if (interactionMode === 'view') return;
+    e.preventDefault();
+
+    // If it was a tap (not a drag), perform click action
+    if (touchStartPos) {
+        raycaster.setFromCamera(mouse, camera);
+        handleInteractionClick();
+    }
+    touchStartPos = null;
+}
+
+// Unified interaction handlers (work for both mouse and touch)
+function handleInteractionMove() {
+    if (interactionMode === 'place_optical') {
+        const hFP = parseFloat(document.getElementById('h-fp').value);
+        const hAmb = parseFloat(document.getElementById('h-amb').value);
+        const hFC = parseFloat(document.getElementById('h-fc').value);
+        const layer = document.getElementById('opt-layer-select').value;
+        let targetY = 0;
+        if (layer === 'fp') targetY = 0.05; else if (layer === 'amb') targetY = hFP + hAmb; else targetY = hFP + hAmb + hFC;
+        const plane = new THREE.Plane(new THREE.Vector3(0, -1, 0), targetY);
+        const target = new THREE.Vector3();
+        raycaster.ray.intersectPlane(plane, target);
+        if (target) {
+            const s = getSnapPos(target, true);
+            document.getElementById('cursor-coords-opt').innerText = `${s.x.toFixed(1)} / ${s.z.toFixed(1)}`;
+        }
+    } else if (interactionMode === 'place_vesda') {
+        const hits = raycaster.intersectObjects(wallColliders);
+        if (hits.length > 0) {
+            const s = getWallSnapPos(hits[0].point, hits[0].object);
+            document.getElementById('cursor-coords-vesda').innerText = `X:${s.x.toFixed(1)} Y:${s.y.toFixed(1)} Z:${s.z.toFixed(1)}`;
+        }
+    } else if (interactionMode === 'place_door' && ghostMesh) {
+        const hits = raycaster.intersectObjects(wallColliders);
+        if (hits.length > 0) {
+            const hit = hits[0];
+            ghostMesh.position.copy(hit.point);
+            const doorH = 2.1;
+            ghostMesh.position.y = hit.point.y + doorH / 2;
+            const hFP = parseFloat(document.getElementById('h-fp').value);
+            if (hit.object.userData.isFloor) ghostMesh.position.y = hFP + doorH / 2;
+            if (hit.object.userData.normal) {
+                const n = hit.object.userData.normal;
+                ghostMesh.lookAt(ghostMesh.position.clone().add(n));
+            }
+        }
+    }
+}
+
+function handleInteractionClick() {
+    if (interactionMode === 'place_vesda') {
+        const hits = raycaster.intersectObjects(wallColliders.filter(o => !o.userData.isFloor));
+        if (hits.length > 0) {
+            const pos = getWallSnapPos(hits[0].point, hits[0].object);
+            placeVesdaUnit(pos, hits[0].object.userData.normal || hits[0].face.normal);
+            updateDetection();
+        }
+    }
+    else if (interactionMode === 'place_optical') {
+        const hFP = parseFloat(document.getElementById('h-fp').value);
+        const hAmb = parseFloat(document.getElementById('h-amb').value);
+        const hFC = parseFloat(document.getElementById('h-fc').value);
+        const layer = document.getElementById('opt-layer-select').value;
+        let targetY = 0;
+        if (layer === 'fp') targetY = 0.05; else if (layer === 'amb') targetY = hFP + hAmb; else targetY = hFP + hAmb + hFC;
+        const plane = new THREE.Plane(new THREE.Vector3(0, -1, 0), targetY);
+        const target = new THREE.Vector3();
+        raycaster.ray.intersectPlane(plane, target);
+        if (target) {
+            const s = getSnapPos(target, true);
+            const L = parseFloat(document.getElementById('dim-l').value);
+            const W = parseFloat(document.getElementById('dim-w').value);
+            if (Math.abs(s.x) < L / 2 && Math.abs(s.z) < W / 2) placeOptical(s, layer);
+        }
+    }
+    else if (interactionMode === 'place_door') {
+        const hits = raycaster.intersectObjects(wallColliders);
+        if (hits.length > 0) {
+            const hit = hits[0];
+            let pos = hit.point.clone();
+            let rotY = 0;
+            const hFP = parseFloat(document.getElementById('h-fp').value);
+            const doorH = 2.1;
+            pos.y = hFP + doorH / 2;
+            if (hit.object.userData.isFloor) {
+                if (document.getElementById('snap-door-angle').checked) rotY = Math.PI / 2;
+            } else if (hit.object.userData.normal) {
+                const n = hit.object.userData.normal;
+                if (Math.abs(n.x) > 0.5) rotY = Math.PI / 2; else rotY = 0;
+            }
+            placeDoor(pos, rotY);
+        }
+    }
+    else if (interactionMode === 'delete') {
+        const hits = raycaster.intersectObjects(manualGroup.children, true);
+        if (hits.length > 0) {
+            let obj = hits[0].object;
+            while (obj.parent && obj.parent !== manualGroup) obj = obj.parent;
+            const item = manualItems.find(i => i.mesh === obj);
+            if (item) deleteItem(item);
+        }
+    }
 }
 
 // --- Python Backend Integration ---

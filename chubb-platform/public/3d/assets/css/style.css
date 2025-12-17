@@ -294,9 +294,61 @@ body.tablet-mode label {
     margin-bottom: 8px;
 }
 
-/* Larger controls panel on tablet */
-@media (pointer: coarse) {
-    body.tablet-mode #controls {
-        width: 500px;
-    }
+/* iPad/Tablet: Smaller controls panel */
+body.tablet-mode #controls {
+    width: 280px;
+    max-height: 70vh;
+    top: 10px;
+    right: 10px;
+    font-size: 0.85rem;
+}
+
+body.tablet-mode .tab-btn {
+    padding: 10px 4px;
+    font-size: 0.75rem;
+}
+
+body.tablet-mode .tab-content {
+    padding: 12px;
+}
+
+body.tablet-mode .control-group h3 {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+
+/* Collapse button for tablet */
+#collapse-btn {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+    width: 44px;
+    height: 44px;
+    background: white;
+    border: 2px solid #3b82f6;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+body.tablet-mode #collapse-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.tablet-mode #controls.collapsed {
+    display: none;
+}
+
+body.tablet-mode #controls:not(.collapsed)~#collapse-btn {
+    right: 300px;
+}
+
+/* Better touch targets for canvas interaction on tablet */
+body.tablet-mode #canvas-container {
+    touch-action: none;
 }
