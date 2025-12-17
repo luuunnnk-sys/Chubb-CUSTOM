@@ -7,8 +7,8 @@ export interface SketchModuleProps {
     deviceMode: 'pc' | 'tablet';
 }
 
-// URL Vercel de chubb-sketch-app (à remplacer par l'URL réelle une fois déployé)
-const SKETCH_APP_URL = import.meta.env.VITE_SKETCH_APP_URL || 'https://chubb-sketch.vercel.app';
+// URL Vercel de chubb-sketch-app
+const SKETCH_APP_URL = import.meta.env.VITE_SKETCH_APP_URL || 'https://chubb-sketch-app.vercel.app';
 
 const SketchModule = ({ refreshTrigger, isFullscreen, deviceMode }: SketchModuleProps) => {
     const [isLoading, setIsLoading] = useState(true);

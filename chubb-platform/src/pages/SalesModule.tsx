@@ -7,7 +7,7 @@ export interface SalesModuleProps {
     deviceMode: 'pc' | 'tablet';
 }
 
-// URL Vercel de chubb-sales-app (à remplacer par l'URL réelle une fois déployé)
+// URL Vercel de chubb-sales-app
 const SALES_APP_URL = import.meta.env.VITE_SALES_APP_URL || 'https://chubb-sales.vercel.app';
 
 const SalesModule = ({ isFullscreen, deviceMode }: SalesModuleProps) => {
