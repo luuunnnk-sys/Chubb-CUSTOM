@@ -75,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
             {/* Footer */}
             <div className="p-4 border-t border-white/10 text-xs text-gray-400 text-center">
-                Chubb France © 2024
+                Chubb France © 2025
             </div>
         </aside>
     );
