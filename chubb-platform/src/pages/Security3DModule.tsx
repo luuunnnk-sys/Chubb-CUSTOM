@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import { AlertCircle } from 'lucide-react';
 
-interface Security3DModuleProps {
+export interface Security3DModuleProps {
     refreshTrigger: number;
     isFullscreen: boolean;
+    deviceMode: 'pc' | 'tablet';
 }
 
-const Security3DModule = ({ refreshTrigger, isFullscreen }: Security3DModuleProps) => {
+const Security3DModule = ({ refreshTrigger, isFullscreen, deviceMode }: Security3DModuleProps) => {
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
-    const [iframeSrc, setIframeSrc] = useState('http://localhost:8000');
-
     const SECURITY_3D_URL = 'http://localhost:8000';
+    const [iframeSrc, setIframeSrc] = useState(`${SECURITY_3D_URL}?mode=${deviceMode}`);
 
     useEffect(() => {
         // Check if the 3D app is running

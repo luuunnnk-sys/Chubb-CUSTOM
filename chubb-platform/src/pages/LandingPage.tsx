@@ -1,12 +1,14 @@
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Shield, Flame, Building2 } from 'lucide-react';
+import { ArrowRight, Shield, Flame, Building2, Monitor, Tablet } from 'lucide-react';
 import InteractiveBackground from '../components/InteractiveBackground';
 
 interface LandingPageProps {
     onSelectModule: (module: 'home' | 'sketch' | '3d' | 'sales') => void;
+    deviceMode: 'pc' | 'tablet';
+    onDeviceModeChange: (mode: 'pc' | 'tablet') => void;
 }
 
-const LandingPage = ({ onSelectModule }: LandingPageProps) => {
+const LandingPage = ({ onSelectModule, deviceMode, onDeviceModeChange }: LandingPageProps) => {
     const navigate = useNavigate();
 
     const handleSelectModule = (module: 'sketch' | '3d' | 'sales') => {
@@ -84,6 +86,83 @@ const LandingPage = ({ onSelectModule }: LandingPageProps) => {
                         <br />
                         Conception, visualisation et dimensionnement de systèmes de détection et d'extinction.
                     </p>
+                </div>
+
+                {/* Device Mode Toggle */}
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '12px',
+                    marginBottom: '40px',
+                    padding: '16px 24px',
+                    background: 'rgba(30, 41, 59, 0.8)',
+                    backdropFilter: 'blur(20px)',
+                    borderRadius: '16px',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    animation: 'fade-in 0.8s ease-out 0.2s both'
+                }}>
+                    <span style={{ color: '#94a3b8', fontSize: '14px', fontWeight: 500 }}>
+                        Interface :
+                    </span>
+                    <div style={{
+                        display: 'flex',
+                        background: 'rgba(15, 23, 42, 0.6)',
+                        borderRadius: '12px',
+                        padding: '4px',
+                        gap: '4px'
+                    }}>
+                        <button
+                            onClick={() => onDeviceModeChange('pc')}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                padding: '10px 20px',
+                                borderRadius: '10px',
+                                border: 'none',
+                                cursor: 'pointer',
+                                fontSize: '14px',
+                                fontWeight: 600,
+                                transition: 'all 0.2s ease',
+                                background: deviceMode === 'pc'
+                                    ? 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)'
+                                    : 'transparent',
+                                color: deviceMode === 'pc' ? '#ffffff' : '#94a3b8',
+                                boxShadow: deviceMode === 'pc'
+                                    ? '0 4px 12px rgba(59, 130, 246, 0.4)'
+                                    : 'none'
+                            }}
+                        >
+                            <Monitor size={18} />
+                            PC / Desktop
+                        </button>
+                        <button
+                            onClick={() => onDeviceModeChange('tablet')}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                padding: '10px 20px',
+                                borderRadius: '10px',
+                                border: 'none',
+                                cursor: 'pointer',
+                                fontSize: '14px',
+                                fontWeight: 600,
+                                transition: 'all 0.2s ease',
+                                background: deviceMode === 'tablet'
+                                    ? 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)'
+                                    : 'transparent',
+                                color: deviceMode === 'tablet' ? '#ffffff' : '#94a3b8',
+                                boxShadow: deviceMode === 'tablet'
+                                    ? '0 4px 12px rgba(34, 197, 94, 0.4)'
+                                    : 'none'
+                            }}
+                        >
+                            <Tablet size={18} />
+                            iPad / Tablette
+                        </button>
+                    </div>
                 </div>
 
                 {/* Module Cards */}

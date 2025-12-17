@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import { AlertCircle } from 'lucide-react';
 
-interface SketchModuleProps {
+export interface SketchModuleProps {
     refreshTrigger: number;
     isFullscreen: boolean;
+    deviceMode: 'pc' | 'tablet';
 }
 
-const SketchModule = ({ refreshTrigger, isFullscreen }: SketchModuleProps) => {
+const SketchModule = ({ refreshTrigger, isFullscreen, deviceMode }: SketchModuleProps) => {
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
-    const [iframeSrc, setIframeSrc] = useState('http://localhost:5173');
-
     const SKETCH_APP_URL = 'http://localhost:5173';
+    const [iframeSrc, setIframeSrc] = useState(`${SKETCH_APP_URL}?mode=${deviceMode}`);
 
     useEffect(() => {
         // Check if the sketch app is running
@@ -32,24 +32,29 @@ const SketchModule = ({ refreshTrigger, isFullscreen }: SketchModuleProps) => {
         return () => clearTimeout(timer);
     }, []);
 
-    // Handle refresh from parent
+    // Handle refresh from parent or mode change
     useEffect(() => {
         if (refreshTrigger > 0) {
             setIsLoading(true);
             setIframeSrc('');
             setTimeout(() => {
-                setIframeSrc(SKETCH_APP_URL);
+                setIframeSrc(`${SKETCH_APP_URL}?mode=${deviceMode}`);
                 setIsLoading(false);
             }, 100);
         }
     }, [refreshTrigger]);
+
+    // Handle device mode change
+    useEffect(() => {
+        setIframeSrc(`${SKETCH_APP_URL}?mode=${deviceMode}`);
+    }, [deviceMode]);
 
     const handleRetry = () => {
         setIsLoading(true);
         setHasError(false);
         setIframeSrc('');
         setTimeout(() => {
-            setIframeSrc(SKETCH_APP_URL);
+            setIframeSrc(`${SKETCH_APP_URL}?mode=${deviceMode}`);
         }, 100);
     };
 

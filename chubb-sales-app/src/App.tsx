@@ -8,6 +8,7 @@ import ProspectList from './components/ProspectList';
 import ProspectDetail from './components/ProspectDetail';
 import Planning from './components/Planning';
 import NewProspectModal from './components/NewProspectModal';
+import { useDeviceMode } from './hooks/useDeviceMode';
 
 type View = 'dashboard' | 'prospects' | 'planning';
 
@@ -18,6 +19,9 @@ function App() {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [selectedProspect, setSelectedProspect] = useState<Prospect | null>(null);
   const [showNewModal, setShowNewModal] = useState(false);
+
+  // Mode PC (souris + clavier) ou iPad (stylet + tactile)
+  const [deviceMode, setDeviceMode] = useDeviceMode();
 
   // Charger les données au démarrage
   useEffect(() => {
@@ -79,6 +83,8 @@ function App() {
           setSelectedProspect(null);
         }}
         onNewProspect={() => setShowNewModal(true)}
+        deviceMode={deviceMode}
+        onDeviceModeChange={setDeviceMode}
       />
 
       {/* Contenu principal */}
@@ -136,3 +142,4 @@ function App() {
 }
 
 export default App;
+

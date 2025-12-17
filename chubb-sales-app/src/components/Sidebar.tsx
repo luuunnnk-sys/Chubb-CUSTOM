@@ -1,12 +1,22 @@
 import React from 'react';
+import DeviceToggle from './DeviceToggle';
+import type { DeviceMode } from '../hooks/useDeviceMode';
 
 interface SidebarProps {
     currentView: 'dashboard' | 'prospects' | 'planning';
     onChangeView: (view: 'dashboard' | 'prospects' | 'planning') => void;
     onNewProspect: () => void;
+    deviceMode: DeviceMode;
+    onDeviceModeChange: (mode: DeviceMode) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, onNewProspect }) => {
+const Sidebar: React.FC<SidebarProps> = ({
+    currentView,
+    onChangeView,
+    onNewProspect,
+    deviceMode,
+    onDeviceModeChange
+}) => {
     const menuItems = [
         { id: 'dashboard', label: 'Tableau de bord', icon: '📊' },
         { id: 'prospects', label: 'Prospects', icon: '👥' },
@@ -58,6 +68,11 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, onNewProsp
                 ))}
             </nav>
 
+            {/* Device Toggle */}
+            <div className="px-4 py-3 border-t border-white/10">
+                <DeviceToggle mode={deviceMode} onChange={onDeviceModeChange} />
+            </div>
+
             {/* Footer */}
             <div className="p-4 border-t border-white/10 text-xs text-gray-400 text-center">
                 Chubb France © 2024
@@ -67,3 +82,4 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, onNewProsp
 };
 
 export default Sidebar;
+

@@ -10,6 +10,11 @@ function AppContent() {
     const [currentModule, setCurrentModule] = useState<'home' | 'sketch' | '3d' | 'sales'>('home');
     const [refreshTrigger, setRefreshTrigger] = useState(0);
     const [isFullscreen, setIsFullscreen] = useState(false);
+    const [deviceMode, setDeviceMode] = useState<'pc' | 'tablet'>(() => {
+        // Récupérer le mode depuis localStorage ou défaut 'pc'
+        const saved = localStorage.getItem('chubb_device_mode');
+        return (saved === 'tablet' ? 'tablet' : 'pc');
+    });
 
     const location = useLocation();
 
@@ -78,23 +83,32 @@ function AppContent() {
 
             <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                 <Routes>
-                    <Route path="/" element={<LandingPage onSelectModule={setCurrentModule} />} />
+                    <Route path="/" element={
+                        <LandingPage
+                            onSelectModule={setCurrentModule}
+                            deviceMode={deviceMode}
+                            onDeviceModeChange={setDeviceMode}
+                        />
+                    } />
                     <Route path="/sketch" element={
                         <SketchModule
                             refreshTrigger={refreshTrigger}
                             isFullscreen={isFullscreen}
+                            deviceMode={deviceMode}
                         />
                     } />
                     <Route path="/3d" element={
                         <Security3DModule
                             refreshTrigger={refreshTrigger}
                             isFullscreen={isFullscreen}
+                            deviceMode={deviceMode}
                         />
                     } />
                     <Route path="/sales" element={
                         <SalesModule
                             refreshTrigger={refreshTrigger}
                             isFullscreen={isFullscreen}
+                            deviceMode={deviceMode}
                         />
                     } />
                 </Routes>

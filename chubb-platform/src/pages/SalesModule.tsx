@@ -1,9 +1,10 @@
-interface SalesModuleProps {
+export interface SalesModuleProps {
     refreshTrigger: number;
     isFullscreen: boolean;
+    deviceMode: 'pc' | 'tablet';
 }
 
-const SalesModule = ({ refreshTrigger, isFullscreen }: SalesModuleProps) => {
+const SalesModule = ({ refreshTrigger, isFullscreen, deviceMode }: SalesModuleProps) => {
     return (
         <div style={{
             width: '100%',
@@ -14,7 +15,7 @@ const SalesModule = ({ refreshTrigger, isFullscreen }: SalesModuleProps) => {
         }}>
             <iframe
                 key={refreshTrigger}
-                src="http://localhost:5175"
+                src={`http://localhost:5175?mode=${deviceMode}`}
                 style={{
                     width: '100%',
                     height: '100%',
