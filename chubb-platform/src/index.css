@@ -1,6 +1,20 @@
 /* Tailwind CSS v4 */
 @import "tailwindcss";
 
+/* Force black text in form inputs (fixes Tailwind v4 gray inheritance) */
+input,
+select,
+textarea {
+  color: #111827 !important;
+  /* text-gray-900 */
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af !important;
+  /* text-gray-400 for placeholders */
+}
+
 /* ========================================
    CHUBB PLATFORM - Design System
    ======================================== */
