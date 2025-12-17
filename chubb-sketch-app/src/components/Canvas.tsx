@@ -188,7 +188,17 @@ const Canvas = forwardRef<any, CanvasProps>(
     useEffect(() => {
       const move = (e: MouseEvent) => {
         if (!draggingId) return;
-        const { x, y } = screenToPlan(e.clientX, e.clientY);
+        let { x, y } = screenToPlan(e.clientX, e.clientY);
+
+        // Apply bottle alignment snapping for bottle types
+        const draggingEquip = floorData.equipment.find(eq => eq.id === draggingId);
+        const BOTTLE_TYPES_CHECK = ['bottle_ig55', 'tank_hifog', 'extinguisher'];
+        if (draggingEquip && BOTTLE_TYPES_CHECK.includes(draggingEquip.type)) {
+          const snapped = snapToBottleAlignment(x, y, draggingId);
+          x = snapped.x;
+          y = snapped.y;
+        }
+
         onMoveEquipment(draggingId, x, y);
       };
       const up = () => setDraggingId(null);
@@ -241,6 +251,37 @@ const Canvas = forwardRef<any, CanvasProps>(
         window.removeEventListener("touchend", handleTouchEnd);
       };
     }, [isTouchDragMode, selectedEquipmentId, touchDragPreviewPos, onMoveEquipment]);
+
+    // Snap to align bottles (IG55, HiFog tanks) horizontally or vertically
+    const BOTTLE_TYPES = ['bottle_ig55', 'tank_hifog', 'extinguisher'];
+    const snapToBottleAlignment = (x: number, y: number, excludeId?: string) => {
+      const SNAP_THRESHOLD = 20 / planZoom; // 20px snap distance
+      let snappedX = x;
+      let snappedY = y;
+
+      // Get all bottles except the one being dragged
+      const bottles = floorData.equipment.filter(
+        eq => BOTTLE_TYPES.includes(eq.type) && eq.id !== excludeId
+      );
+
+      // Check for horizontal/vertical alignment with other bottles
+      for (const bottle of bottles) {
+        const bx = (bottle as any).x;
+        const by = (bottle as any).y;
+
+        // Snap X (vertical line alignment)
+        if (Math.abs(x - bx) < SNAP_THRESHOLD) {
+          snappedX = bx;
+        }
+
+        // Snap Y (horizontal line alignment)
+        if (Math.abs(y - by) < SNAP_THRESHOLD) {
+          snappedY = by;
+        }
+      }
+
+      return { x: snappedX, y: snappedY };
+    };
 
     // snap sur tubing et VESDA
     const snapToTubeOrVesda = (x: number, y: number) => {
