@@ -50,34 +50,37 @@ function AppContent() {
                     onClick={handleToggleFullscreen}
                     style={{
                         position: 'fixed',
-                        top: '16px',
-                        left: '16px',
+                        bottom: '12px',
+                        left: '12px',
                         zIndex: 10000,
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '8px',
-                        padding: '10px 16px',
-                        background: 'rgba(15, 23, 42, 0.95)',
-                        backdropFilter: 'blur(10px)',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        borderRadius: '10px',
-                        color: '#f8fafc',
+                        gap: '4px',
+                        padding: '6px 10px',
+                        background: 'rgba(15, 23, 42, 0.85)',
+                        backdropFilter: 'blur(8px)',
+                        border: '1px solid rgba(255, 255, 255, 0.15)',
+                        borderRadius: '6px',
+                        color: '#94a3b8',
                         cursor: 'pointer',
-                        fontSize: '14px',
+                        fontSize: '11px',
                         fontWeight: 500,
-                        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
-                        transition: 'all 0.2s ease'
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
+                        transition: 'all 0.2s ease',
+                        opacity: 0.7
                     }}
                     onMouseEnter={(e) => {
-                        e.currentTarget.style.background = 'rgba(15, 23, 42, 1)';
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                        e.currentTarget.style.background = 'rgba(15, 23, 42, 0.95)';
+                        e.currentTarget.style.opacity = '1';
+                        e.currentTarget.style.color = '#f8fafc';
                     }}
                     onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'rgba(15, 23, 42, 0.95)';
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                        e.currentTarget.style.background = 'rgba(15, 23, 42, 0.85)';
+                        e.currentTarget.style.opacity = '0.7';
+                        e.currentTarget.style.color = '#94a3b8';
                     }}
                 >
-                    ✕ Quitter plein écran
+                    ✕ Quitter
                 </button>
             )}
 
