@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, RefreshCw } from 'lucide-react';
 
 export interface SketchModuleProps {
     refreshTrigger: number;
@@ -7,47 +7,29 @@ export interface SketchModuleProps {
     deviceMode: 'pc' | 'tablet';
 }
 
+// URL Vercel de chubb-sketch-app (à remplacer par l'URL réelle une fois déployé)
+const SKETCH_APP_URL = import.meta.env.VITE_SKETCH_APP_URL || 'https://chubb-sketch.vercel.app';
+
 const SketchModule = ({ refreshTrigger, isFullscreen, deviceMode }: SketchModuleProps) => {
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
-    const SKETCH_APP_URL = 'http://localhost:5173';
     const [iframeSrc, setIframeSrc] = useState(`${SKETCH_APP_URL}?mode=${deviceMode}`);
 
+    // Handle device mode change
     useEffect(() => {
-        // Check if the sketch app is running
-        const checkServer = async () => {
-            try {
-                const response = await fetch(SKETCH_APP_URL, { mode: 'no-cors' });
-                if (response) {
-                    setIsLoading(false);
-                    setHasError(false);
-                }
-            } catch {
-                setHasError(true);
-                setIsLoading(false);
-            }
-        };
+        setIframeSrc(`${SKETCH_APP_URL}?mode=${deviceMode}`);
+    }, [deviceMode]);
 
-        const timer = setTimeout(checkServer, 1000);
-        return () => clearTimeout(timer);
-    }, []);
-
-    // Handle refresh from parent or mode change
+    // Handle refresh from parent
     useEffect(() => {
         if (refreshTrigger > 0) {
             setIsLoading(true);
             setIframeSrc('');
             setTimeout(() => {
                 setIframeSrc(`${SKETCH_APP_URL}?mode=${deviceMode}`);
-                setIsLoading(false);
             }, 100);
         }
-    }, [refreshTrigger]);
-
-    // Handle device mode change
-    useEffect(() => {
-        setIframeSrc(`${SKETCH_APP_URL}?mode=${deviceMode}`);
-    }, [deviceMode]);
+    }, [refreshTrigger, deviceMode]);
 
     const handleRetry = () => {
         setIsLoading(true);
@@ -65,10 +47,11 @@ const SketchModule = ({ refreshTrigger, isFullscreen, deviceMode }: SketchModule
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: 'calc(100vh - 56px)',
-                marginTop: '56px',
+                height: isFullscreen ? '100vh' : 'calc(100vh - 56px)',
+                marginTop: isFullscreen ? 0 : '56px',
                 padding: '24px',
-                textAlign: 'center'
+                textAlign: 'center',
+                background: '#0f172a'
             }}>
                 <div style={{
                     background: 'rgba(239, 68, 68, 0.1)',
@@ -82,21 +65,8 @@ const SketchModule = ({ refreshTrigger, isFullscreen, deviceMode }: SketchModule
                         Module Sketch non disponible
                     </h2>
                     <p style={{ color: '#94a3b8', marginBottom: '24px', lineHeight: 1.6 }}>
-                        L'application Chubb Sketch n'est pas démarrée.
-                        Veuillez lancer le serveur avec la commande suivante :
+                        L'application Chubb Sketch n'a pas pu être chargée.
                     </p>
-                    <code style={{
-                        display: 'block',
-                        background: 'rgba(0, 0, 0, 0.3)',
-                        padding: '16px',
-                        borderRadius: '8px',
-                        color: '#22c55e',
-                        fontFamily: 'monospace',
-                        fontSize: '14px',
-                        marginBottom: '24px'
-                    }}>
-                        cd chubb-sketch-app && npm run dev
-                    </code>
                     <button
                         onClick={handleRetry}
                         style={{
@@ -114,6 +84,7 @@ const SketchModule = ({ refreshTrigger, isFullscreen, deviceMode }: SketchModule
                             cursor: 'pointer'
                         }}
                     >
+                        <RefreshCw size={16} />
                         Réessayer
                     </button>
                 </div>
@@ -160,10 +131,10 @@ const SketchModule = ({ refreshTrigger, isFullscreen, deviceMode }: SketchModule
                         <p style={{ color: '#94a3b8' }}>Chargement de Chubb Sketch...</p>
                     </div>
                     <style>{`
-            @keyframes spin {
-              to { transform: rotate(360deg); }
-            }
-          `}</style>
+                        @keyframes spin {
+                            to { transform: rotate(360deg); }
+                        }
+                    `}</style>
                 </div>
             )}
 
