@@ -190,9 +190,9 @@ const Canvas = forwardRef<any, CanvasProps>(
         if (!draggingId) return;
         let { x, y } = screenToPlan(e.clientX, e.clientY);
 
-        // Apply bottle alignment snapping for bottle types
+        // Apply bottle alignment snapping for Argon cylinders
         const draggingEquip = floorData.equipment.find(eq => eq.id === draggingId);
-        const BOTTLE_TYPES_CHECK = ['bottle_ig55', 'tank_hifog', 'extinguisher'];
+        const BOTTLE_TYPES_CHECK = ['argon-cylinder'];
         if (draggingEquip && BOTTLE_TYPES_CHECK.includes(draggingEquip.type)) {
           const snapped = snapToBottleAlignment(x, y, draggingId);
           x = snapped.x;
@@ -252,8 +252,8 @@ const Canvas = forwardRef<any, CanvasProps>(
       };
     }, [isTouchDragMode, selectedEquipmentId, touchDragPreviewPos, onMoveEquipment]);
 
-    // Snap to align bottles (IG55, HiFog tanks) horizontally or vertically
-    const BOTTLE_TYPES = ['bottle_ig55', 'tank_hifog', 'extinguisher'];
+    // Snap to align cylinders (Argon IG55) horizontally or vertically
+    const BOTTLE_TYPES = ['argon-cylinder'];
     const snapToBottleAlignment = (x: number, y: number, excludeId?: string) => {
       const SNAP_THRESHOLD = 20 / planZoom; // 20px snap distance
       let snappedX = x;
