@@ -1,7 +1,5 @@
-/* Tailwind CSS */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind CSS v4 */
+@import "tailwindcss";
 
 /* ========================================
    CHUBB PLATFORM - Design System
