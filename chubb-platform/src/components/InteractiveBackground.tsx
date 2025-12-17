@@ -62,20 +62,20 @@ const InteractiveBackground = () => {
             }
 
             // Glowing orbs
-            // Green orb
+            // Blue orb (main)
             const orb1X = width * 0.2 + Math.sin(t * 0.5) * 100;
             const orb1Y = height * 0.3 + Math.cos(t * 0.3) * 50;
             const orb1Gradient = ctx.createRadialGradient(orb1X, orb1Y, 0, orb1X, orb1Y, 350);
-            orb1Gradient.addColorStop(0, 'rgba(34, 197, 94, 0.15)');
+            orb1Gradient.addColorStop(0, 'rgba(59, 130, 246, 0.2)');
             orb1Gradient.addColorStop(1, 'transparent');
             ctx.fillStyle = orb1Gradient;
             ctx.fillRect(0, 0, width, height);
 
-            // Blue orb
+            // Red orb (accent)
             const orb2X = width * 0.8 + Math.cos(t * 0.4) * 80;
             const orb2Y = height * 0.7 + Math.sin(t * 0.6) * 60;
             const orb2Gradient = ctx.createRadialGradient(orb2X, orb2Y, 0, orb2X, orb2Y, 300);
-            orb2Gradient.addColorStop(0, 'rgba(59, 130, 246, 0.15)');
+            orb2Gradient.addColorStop(0, 'rgba(220, 38, 38, 0.12)');
             orb2Gradient.addColorStop(1, 'transparent');
             ctx.fillStyle = orb2Gradient;
             ctx.fillRect(0, 0, width, height);

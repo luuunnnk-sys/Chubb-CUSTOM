@@ -51,11 +51,11 @@ const LandingPage = ({ onSelectModule, deviceMode, onDeviceModeChange }: Landing
                         height: '120px',
                         margin: '0 auto 32px',
                         borderRadius: '24px',
-                        background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #3b82f6 100%)',
+                        background: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #dc2626 100%)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        boxShadow: '0 20px 60px rgba(34, 197, 94, 0.3)',
+                        boxShadow: '0 20px 60px rgba(59, 130, 246, 0.4)',
                         animation: 'pulse-glow 3s ease-in-out infinite'
                     }}>
                         <Shield size={56} color="white" strokeWidth={1.5} />
@@ -66,7 +66,7 @@ const LandingPage = ({ onSelectModule, deviceMode, onDeviceModeChange }: Landing
                         fontSize: 'clamp(2.5rem, 5vw, 4rem)',
                         fontWeight: 800,
                         marginBottom: '16px',
-                        background: 'linear-gradient(135deg, #22c55e 0%, #4ade80 50%, #3b82f6 100%)',
+                        background: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #dc2626 100%)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                         backgroundClip: 'text'
