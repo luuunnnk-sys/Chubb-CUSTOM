@@ -210,10 +210,44 @@ async function fetchGasCalculation() {
             updateExtinctionResultsUI(data); // New function
             updateExtinction3D(data); // Trigger 3D update with data
         } else {
-            console.error("Erreur API Python:", response.status);
+            console.warn("API non disponible, utilisation du calcul local");
+            useLocalCalculation(L, W, hFP, hAmb, hFC);
         }
     } catch (error) {
-        console.error("Erreur connexion Backend:", error);
+        console.warn("Backend non disponible, utilisation du calcul local:", error.message);
+        useLocalCalculation(L, W, hFP, hAmb, hFC);
+    }
+}
+
+// --- Local Fallback Calculation (when Python backend is unavailable) ---
+function useLocalCalculation(L, W, hFP, hAmb, hFC) {
+    const volumeTotal = L * W * (hFP + hAmb + hFC);
+    const surfaceTotal = L * W;
+
+    // Simplified calculation (1 cylinder per 30m² for IG55, 16L per m² for HiFog)
+    const ig55Cylinders = Math.max(1, Math.ceil(surfaceTotal / 30));
+    const hifogTankLiters = Math.ceil(surfaceTotal * 16);
+
+    const localData = {
+        volume_total: volumeTotal.toFixed(2),
+        agent_details: {
+            'IG55 (Local)': { mass_kg: (volumeTotal * 0.65).toFixed(1), concentration_design: 42 },
+            'HiFog (Local)': { mass_kg: hifogTankLiters, concentration_design: 'N/A' }
+        },
+        extinction_system: {
+            ig55_cylinders: ig55Cylinders,
+            hifog_tank_liters: hifogTankLiters
+        }
+    };
+
+    updateGasResultsUI(localData);
+    updateExtinctionResultsUI(localData);
+    updateExtinction3D(localData);
+
+    // Show notice that local calculation is being used
+    const container = document.getElementById('gas-results-content');
+    if (container) {
+        container.innerHTML += '<p style="color:#f59e0b; font-size:11px; margin-top:8px;"><i class="fas fa-info-circle"></i> Calcul local (backend non disponible)</p>';
     }
 }
 
