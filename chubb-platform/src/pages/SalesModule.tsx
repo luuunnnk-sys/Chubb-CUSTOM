@@ -5,6 +5,9 @@ export interface SalesModuleProps {
 }
 
 const SalesModule = ({ refreshTrigger, isFullscreen, deviceMode }: SalesModuleProps) => {
+    // Use environment variable in production, fallback to localhost for development
+    const SALES_APP_URL = import.meta.env.VITE_SALES_APP_URL || 'http://localhost:5175';
+
     return (
         <div style={{
             width: '100%',
@@ -15,7 +18,7 @@ const SalesModule = ({ refreshTrigger, isFullscreen, deviceMode }: SalesModulePr
         }}>
             <iframe
                 key={refreshTrigger}
-                src={`http://localhost:5175?mode=${deviceMode}`}
+                src={`${SALES_APP_URL}?mode=${deviceMode}`}
                 style={{
                     width: '100%',
                     height: '100%',
