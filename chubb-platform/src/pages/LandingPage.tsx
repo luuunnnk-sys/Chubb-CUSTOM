@@ -55,7 +55,7 @@ const LandingPage = ({ onSelectModule, deviceMode, onDeviceModeChange }: Landing
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        boxShadow: '0 20px 60px rgba(59, 130, 246, 0.4)',
+                        boxShadow: '0 20px 60px rgba(220, 38, 38, 0.4)',
                         animation: 'pulse-glow 3s ease-in-out infinite'
                     }}>
                         <Shield size={56} color="white" strokeWidth={1.5} />
@@ -389,7 +389,7 @@ const FeatureHighlight = ({ icon, text }: { icon: React.ReactNode; text: string 
         color: '#64748b',
         fontSize: '0.9rem'
     }}>
-        <span style={{ color: '#22c55e' }}>{icon}</span>
+        <span style={{ color: '#dc2626' }}>{icon}</span>
         {text}
     </div>
 );
