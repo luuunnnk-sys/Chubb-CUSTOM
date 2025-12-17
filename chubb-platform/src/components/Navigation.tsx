@@ -191,12 +191,13 @@ const Navigation = ({
                     width: '32px',
                     height: '32px',
                     borderRadius: '8px',
-                    background: 'linear-gradient(135deg, #22c55e 0%, #3b82f6 100%)',
+                    background: 'white',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     fontWeight: 700,
-                    fontSize: '14px'
+                    fontSize: '14px',
+                    color: '#1e40af'
                 }}>
                     C
                 </div>
